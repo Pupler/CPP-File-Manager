@@ -2,10 +2,17 @@
 #include <filesystem>
 using namespace std;
 
+void showHeader() {
+    cout << "\n╔══════════════════════════════════════╗\n";
+    cout << "║         📁 C++ FILE MANAGER          ║\n";
+    cout << "╚══════════════════════════════════════╝\n";
+}
+
 void showHelp() {
     cout << "Basic Commands:\n";
     cout << "  help               Show this help message\n";
     cout << "  exit               Exit the program\n";
+    cout << "  clear              Clear console\n";
     cout << "\nFile Operations:\n";
     cout << "  list               List directory contents\n";
     cout << "  SOON: info <file>        Show file information\n";
@@ -31,9 +38,7 @@ void listDirectory(const string& path = ".") {
 int main() {
     string command;
 
-    cout << "\n╔══════════════════════════════════════╗\n";
-    cout << "║         📁 C++ FILE MANAGER          ║\n";
-    cout << "╚══════════════════════════════════════╝\n";
+    showHeader();
 
     while (true) {
         cout << endl;
@@ -46,6 +51,9 @@ int main() {
             break;
         } else if (command == "list") {
             listDirectory();
+        } else if (command == "clear") {
+            system("clear");
+            showHeader();
         }
     }
 
