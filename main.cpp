@@ -1,5 +1,6 @@
 #include <iostream>
 #include <filesystem>
+#include <iomanip>
 using namespace std;
 
 void showHeader() {
@@ -14,8 +15,8 @@ void showHelp() {
     cout << "  exit               Exit the program\n";
     cout << "  clear              Clear console\n";
     cout << "\nFile Operations:\n";
-    cout << "  list [path]              List directory contents\n";
-    cout << "  SOON: info <file>        Show file information\n";
+    cout << "  list <path>              List directory contents\n";
+    cout << "  info <file>              Show file information\n";
     cout << "  SOON: create <file>      Create a new file\n";
     cout << "  SOON: delete <file>      Delete a file\n";
     cout << "  SOON: copy <src> <dst>   Copy file\n";
@@ -44,6 +45,18 @@ void listDirectory(string& command) {
     }
 }
 
+void showFileInfo(string& command) {
+    filesystem::path fileName = command.substr(5);
+    double size_kb = filesystem::file_size(fileName);
+
+    cout << "📄 File Information:" << endl;
+    cout << "├─ Name: " << fileName.filename() << endl;
+    cout << "├─ Path: " << filesystem::absolute(fileName) << endl;
+    cout << "├─ Size: " << fixed << setprecision(2) << size_kb / 1024.0 << " KB"
+    << " (" << size_kb << " bytes)" << endl;
+
+}
+
 int main() {
     string command;
 
@@ -63,6 +76,8 @@ int main() {
         } else if (command == "clear") {
             system("clear");
             showHeader();
+        } else if (command == "info" || command.rfind("info ", 0) == 0) {
+            showFileInfo(command);
         } else {
             cout << "Invalid command!" << endl;
         }
