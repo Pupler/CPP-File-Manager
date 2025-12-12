@@ -14,7 +14,7 @@ void showHelp() {
     cout << "  exit               Exit the program\n";
     cout << "  clear              Clear console\n";
     cout << "\nFile Operations:\n";
-    cout << "  list               List directory contents\n";
+    cout << "  list [path]              List directory contents\n";
     cout << "  SOON: info <file>        Show file information\n";
     cout << "  SOON: create <file>      Create a new file\n";
     cout << "  SOON: delete <file>      Delete a file\n";
@@ -25,13 +25,22 @@ void showHelp() {
     cout << "  SOON: pwd                Print working directory\n";
 }
 
-void listDirectory(const string& path = ".") {
-    for (const auto& entry : filesystem::directory_iterator(path)) {
-        if (filesystem::is_directory(entry.status())) {
-            cout << entry.path().filename() << " [DIR]" << endl;
+void listDirectory(string& command) {
+    try {
+        if (command.length() > 5) {
+            string path = command.substr(5);
+            for (const auto& entry : filesystem::directory_iterator(path)) {
+                if (filesystem::is_directory(entry.status())) {
+                    cout << entry.path().filename() << " [DIR]" << endl;
+                } else {
+                    cout << entry.path().filename() << " [FILE]" << endl;
+                }
+            }
         } else {
-            cout << entry.path().filename() << " [FILE]" << endl;
+            cout << "Error: path is empty!" << endl;
         }
+    } catch(...) {
+        cout << "Error: path doesn't exist" << endl;
     }
 }
 
@@ -49,11 +58,13 @@ int main() {
             showHelp();
         } else if (command == "exit") {
             break;
-        } else if (command == "list") {
-            listDirectory();
+        } else if (command == "list" || command.rfind("list ", 0) == 0) {
+            listDirectory(command);
         } else if (command == "clear") {
             system("clear");
             showHeader();
+        } else {
+            cout << "Invalid command!" << endl;
         }
     }
 
