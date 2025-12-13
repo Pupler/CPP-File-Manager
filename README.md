@@ -4,7 +4,7 @@ A console-based file manager built with C++ filesystem library. Perform basic fi
 
 ## 📸 Preview
 
-<img width="523" height="683" alt="image" src="https://github.com/user-attachments/assets/d28a4887-7c7a-4c81-9410-6a0c7e048677" />
+<img width="556" height="675" alt="image" src="https://github.com/user-attachments/assets/e6093393-2971-408e-8951-ab4fb2bbfef9" />
 
 ## ✨ Features
 
@@ -18,11 +18,13 @@ A console-based file manager built with C++ filesystem library. Perform basic fi
 ## 🚀 Getting Started
 
 ```bash
-# Compile the program
-g++ main.cpp -o fm -std=c++17
+# Clone the repository
+git clone https://github.com/Pupler/CPP-File-Manager.git
 
-# Run the file manager
-./fm
+# Compile and run
+cd CPP-File-Manager
+g++ main.cpp -o file-manager
+./file-manager
 ```
 
 ## 🛠️ Technology Stack
