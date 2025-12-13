@@ -46,15 +46,23 @@ void listDirectory(string& command) {
 }
 
 void showFileInfo(string& command) {
-    filesystem::path fileName = command.substr(5);
-    double size_kb = filesystem::file_size(fileName);
+    filesystem::path filePath = command.substr(5);
+    try {
+        if (filesystem::exists(filePath)) {
+            double size_kb = filesystem::file_size(filePath);
 
-    cout << "📄 File Information:" << endl;
-    cout << "├─ Name: " << fileName.filename() << endl;
-    cout << "├─ Path: " << filesystem::absolute(fileName) << endl;
-    cout << "├─ Size: " << fixed << setprecision(2) << size_kb / 1024.0 << " KB"
-    << " (" << size_kb << " bytes)" << endl;
-
+            cout << "📄 File Information:" << endl;
+            cout << "├─ Name: " << filePath.filename() << endl;
+            cout << "├─ Path: " << filesystem::absolute(filePath) << endl;
+            cout << "├─ Size: " << fixed << setprecision(2) << size_kb / 1024.0 << " KB"
+            << " (" << size_kb << " bytes)" << endl;
+            cout << "└─ Type: " << filePath.extension() << endl;
+        } else {
+            cout << "File doesn't exist" << endl;
+        }
+    } catch(...) {
+        cout << "Error occured!" << endl;
+    }
 }
 
 int main() {
