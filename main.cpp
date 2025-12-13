@@ -1,6 +1,7 @@
 #include <iostream>
 #include <filesystem>
 #include <iomanip>
+#include <fstream>
 using namespace std;
 
 void showHeader() {
@@ -46,8 +47,9 @@ void listDirectory(string& command) {
 }
 
 void showFileInfo(string& command) {
-    filesystem::path filePath = command.substr(5);
     try {
+        filesystem::path filePath = command.substr(5);
+
         if (filesystem::exists(filePath)) {
             double size_kb = filesystem::file_size(filePath);
 
@@ -59,6 +61,25 @@ void showFileInfo(string& command) {
             cout << "└─ Type: " << filePath.extension() << endl;
         } else {
             cout << "File doesn't exist" << endl;
+        }
+    } catch(...) {
+        cout << "Error occured!" << endl;
+    }
+}
+
+void createFileCommand(string& command) {
+    try {
+        filesystem::path fileName = command.substr(7);
+
+        if (!fileName.empty() && !filesystem::exists(fileName)) {
+            ofstream createFile(fileName);
+            if (createFile.is_open()) {
+                cout << "File created!" << endl;
+            } else {
+                cout << "Error occured while creating a file!" << endl;
+            }
+        } else {
+            cout << "Error: The file's name is empty or file is already created!" << endl;
         }
     } catch(...) {
         cout << "Error occured!" << endl;
@@ -86,6 +107,8 @@ int main() {
             showHeader();
         } else if (command == "info" || command.rfind("info ", 0) == 0) {
             showFileInfo(command);
+        } else if (command == "create" || command.rfind("create ", 0) == 0) {
+            createFileCommand(command);
         } else {
             cout << "Invalid command!" << endl;
         }
