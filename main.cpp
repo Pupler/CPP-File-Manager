@@ -8,18 +8,19 @@ void showHeader() {
     cout << "\n╔══════════════════════════════════════╗\n";
     cout << "║         📁 C++ FILE MANAGER          ║\n";
     cout << "╚══════════════════════════════════════╝\n";
+    cout << "Commands: help\n";
 }
 
 void showHelp() {
     cout << "Basic Commands:\n";
-    cout << "  help               Show this help message\n";
-    cout << "  exit               Exit the program\n";
-    cout << "  clear              Clear console\n";
+    cout << "  help                     Show this help message\n";
+    cout << "  exit                     Exit the program\n";
+    cout << "  clear                    Clear console\n";
     cout << "\nFile Operations:\n";
     cout << "  list <path>              List directory contents\n";
     cout << "  info <file>              Show file information\n";
-    cout << "  SOON: create <file>      Create a new file\n";
-    cout << "  SOON: delete <file>      Delete a file\n";
+    cout << "  create <file>            Create a new file\n";
+    cout << "  delete <file>            Delete a file\n";
     cout << "  SOON: copy <src> <dst>   Copy file\n";
     cout << "  SOON: move <src> <dst>   Move/rename file\n";
     cout << "\nNavigation:\n";
@@ -86,6 +87,26 @@ void createFileCommand(string& command) {
     }
 }
 
+void deleteFile(string& command) {
+    try {
+        filesystem::path filePath = command.substr(7);
+
+        if (!filePath.empty() && filesystem::exists(filePath)) {
+            bool file_is_deleted = filesystem::remove(filePath);
+
+            if (file_is_deleted) {
+                cout << "File deleted!" << endl;
+            } else {
+                cout << "Error occured while deleting file!" << endl;
+            }
+        } else {
+            cout << "Error: The file's path is empty or file doesn't exist!" << endl;
+        }
+    } catch(...) {
+        cout << "Error occured!" << endl;
+    }
+}
+
 int main() {
     string command;
 
@@ -109,6 +130,8 @@ int main() {
             showFileInfo(command);
         } else if (command == "create" || command.rfind("create ", 0) == 0) {
             createFileCommand(command);
+        } else if (command == "delete" || command.rfind("delete ", 0) == 0) {
+            deleteFile(command);
         } else {
             cout << "Invalid command!" << endl;
         }
