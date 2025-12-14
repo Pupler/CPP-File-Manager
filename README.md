@@ -15,6 +15,11 @@ A console-based file manager built with C++ filesystem library. Perform basic fi
 - 🧹 Console clearing
 - 🆘 Help command
 
+## 🛠️ Technology Stack
+
+- C++17 - Modern C++ standard
+- Standard Template Library (STL)
+
 ## 🚀 Getting Started
 
 ```bash
@@ -26,11 +31,6 @@ cd CPP-File-Manager
 g++ main.cpp -o file-manager
 ./file-manager
 ```
-
-## 🛠️ Technology Stack
-
-- C++17 - Modern C++ standard
-- Standard Template Library (STL)
 
 ## 📄 License
 
